@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mill City Mowing – Professional Lawn Care</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --green: #2d6a2d;
+    --green-light: #3d8b3d;
+    --green-dark: #1a4a1a;
+    --accent: #7ec850;
+    --cream: #f7f9f4;
+    --text: #1c2b1c;
+    --muted: #5a6e52;
+    --white: #ffffff;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; color: var(--text); background: var(--white); }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    background: rgba(26,74,26,0.97); backdrop-filter: blur(6px);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%; height: 68px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+  }
+  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .nav-logo svg { width: 36px; height: 36px; }
+  .nav-logo span { color: var(--white); font-size: 1.2rem; font-weight: 700; letter-spacing: 0.5px; }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a { color: rgba(255,255,255,0.85); text-decoration: none; font-size: 0.95rem; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-cta {
+    background: var(--accent); color: var(--green-dark); font-weight: 700;
+    padding: 9px 22px; border-radius: 6px; text-decoration: none;
+    font-size: 0.9rem; transition: background 0.2s, transform 0.15s;
+  }
+  .nav-cta:hover { background: #91d962; transform: translateY(-1px); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--green-dark) 0%, var(--green) 55%, #4a9b30 100%);
+    display: flex; align-items: center; justify-content: center;
+    text-align: center; padding: 100px 24px 60px;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .hero-badge {
+    display: inline-block; background: rgba(126,200,80,0.2); border: 1px solid rgba(126,200,80,0.4);
+    color: var(--accent); font-size: 0.8rem; font-weight: 600; letter-spacing: 2px;
+    text-transform: uppercase; padding: 6px 16px; border-radius: 20px; margin-bottom: 24px;
+  }
+  .hero h1 {
+    font-size: clamp(2.8rem, 6vw, 5rem); font-weight: 800; color: var(--white);
+    line-height: 1.1; margin-bottom: 20px; text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+  }
+  .hero h1 span { color: var(--accent); }
+  .hero p { font-size: clamp(1rem, 2.5vw, 1.25rem); color: rgba(255,255,255,0.82); max-width: 560px; margin: 0 auto 36px; line-height: 1.6; }
+  .hero-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--accent); color: var(--green-dark); font-weight: 700;
+    padding: 15px 36px; border-radius: 8px; text-decoration: none; font-size: 1rem;
+    transition: all 0.2s; box-shadow: 0 4px 20px rgba(126,200,80,0.4);
+  }
+  .btn-primary:hover { background: #91d962; transform: translateY(-2px); box-shadow: 0 8px 30px rgba(126,200,80,0.5); }
+  .btn-secondary {
+    background: transparent; color: var(--white); font-weight: 600;
+    padding: 15px 36px; border-radius: 8px; text-decoration: none; font-size: 1rem;
+    border: 2px solid rgba(255,255,255,0.4); transition: all 0.2s;
+  }
+  .btn-secondary:hover { border-color: var(--white); background: rgba(255,255,255,0.08); }
+
+  /* TRUST BAR */
+  .trust-bar {
+    background: var(--cream); padding: 20px 5%;
+    display: flex; justify-content: center; gap: 48px; flex-wrap: wrap;
+    border-bottom: 1px solid #dde8d5;
+  }
+  .trust-item { display: flex; align-items: center; gap: 10px; }
+  .trust-item svg { color: var(--green); flex-shrink: 0; }
+  .trust-item span { font-weight: 600; font-size: 0.9rem; color: var(--muted); }
+
+  /* SECTION SHARED */
+  section { padding: 90px 5%; }
+  .section-label {
+    font-size: 0.8rem; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--green); margin-bottom: 10px;
+  }
+  .section-title { font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 800; color: var(--text); margin-bottom: 16px; line-height: 1.15; }
+  .section-sub { font-size: 1.05rem; color: var(--muted); max-width: 560px; line-height: 1.65; }
+  .center { text-align: center; }
+  .center .section-sub { margin: 0 auto; }
+
+  /* SERVICES */
+  #services { background: var(--white); }
+  .services-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 28px; margin-top: 52px;
+  }
+  .service-card {
+    background: var(--cream); border-radius: 16px; padding: 36px 28px;
+    border: 1px solid #dde8d5; transition: all 0.25s; position: relative; overflow: hidden;
+  }
+  .service-card::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, var(--green), var(--accent));
+    transform: scaleX(0); transition: transform 0.3s; transform-origin: left;
+  }
+  .service-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(45,106,45,0.12); }
+  .service-card:hover::after { transform: scaleX(1); }
+  .service-icon {
+    width: 60px; height: 60px; background: linear-gradient(135deg, var(--green), var(--green-light));
+    border-radius: 14px; display: flex; align-items: center; justify-content: center;
+    margin-bottom: 22px; font-size: 1.8rem;
+  }
+  .service-card h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 10px; }
+  .service-card p { font-size: 0.95rem; color: var(--muted); line-height: 1.6; }
+
+  /* WHY */
+  #why { background: var(--green-dark); }
+  #why .section-title { color: var(--white); }
+  #why .section-sub { color: rgba(255,255,255,0.7); }
+  #why .section-label { color: var(--accent); }
+  .why-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 24px; margin-top: 52px;
+  }
+  .why-card {
+    background: rgba(255,255,255,0.06); border-radius: 14px;
+    padding: 30px 24px; border: 1px solid rgba(255,255,255,0.1); text-align: center;
+  }
+  .why-num { font-size: 2.8rem; font-weight: 900; color: var(--accent); margin-bottom: 4px; }
+  .why-card h4 { font-size: 1rem; font-weight: 700; color: var(--white); margin-bottom: 8px; }
+  .why-card p { font-size: 0.88rem; color: rgba(255,255,255,0.6); line-height: 1.5; }
+
+  /* TESTIMONIALS */
+  #testimonials { background: var(--cream); }
+  .testimonials-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px; margin-top: 52px;
+  }
+  .testi-card {
+    background: var(--white); border-radius: 16px; padding: 32px 28px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06); border: 1px solid #e8f0e0;
+  }
+  .stars { color: #f5a623; font-size: 1.1rem; margin-bottom: 16px; }
+  .testi-card blockquote { font-size: 0.97rem; color: var(--muted); line-height: 1.65; margin-bottom: 20px; font-style: italic; }
+  .testi-author { font-weight: 700; font-size: 0.9rem; }
+  .testi-loc { font-size: 0.82rem; color: #8fa07a; }
+
+  /* CONTACT */
+  #contact { background: var(--white); }
+  .contact-wrapper {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
+    margin-top: 52px; align-items: start;
+  }
+  .contact-info h3 { font-size: 1.4rem; font-weight: 700; margin-bottom: 20px; }
+  .contact-detail { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 22px; }
+  .contact-icon { width: 44px; height: 44px; background: var(--cream); border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .contact-detail strong { display: block; font-size: 0.85rem; color: var(--muted); margin-bottom: 2px; }
+  .contact-detail span, .contact-detail a { font-weight: 600; color: var(--text); text-decoration: none; }
+  .contact-detail a:hover { color: var(--green); }
+  form { display: flex; flex-direction: column; gap: 16px; }
+  label { font-size: 0.87rem; font-weight: 600; color: var(--muted); margin-bottom: 4px; display: block; }
+  input, textarea, select {
+    width: 100%; padding: 12px 16px; border: 1.5px solid #d0ddc8; border-radius: 8px;
+    font-size: 0.95rem; font-family: inherit; background: var(--cream); color: var(--text);
+    transition: border-color 0.2s;
+  }
+  input:focus, textarea:focus, select:focus { outline: none; border-color: var(--green); background: var(--white); }
+  textarea { resize: vertical; min-height: 120px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .btn-submit {
+    background: var(--green); color: var(--white); font-weight: 700;
+    padding: 14px 28px; border: none; border-radius: 8px; font-size: 1rem;
+    cursor: pointer; transition: all 0.2s; font-family: inherit;
+  }
+  .btn-submit:hover { background: var(--green-light); transform: translateY(-2px); }
+
+  /* FOOTER */
+  footer {
+    background: var(--green-dark); color: rgba(255,255,255,0.7);
+    padding: 40px 5%; display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 16px;
+  }
+  .footer-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .footer-logo span { color: var(--white); font-weight: 700; font-size: 1rem; }
+  footer p { font-size: 0.87rem; }
+  .footer-links { display: flex; gap: 24px; }
+  .footer-links a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.87rem; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--accent); }
+
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .contact-wrapper { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .trust-bar { gap: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="18" cy="18" r="18" fill="#7ec850" fill-opacity="0.2"/>
+      <path d="M6 26c2-8 5-12 12-14 7-2 10 2 12 8" stroke="#7ec850" stroke-width="2.5" stroke-linecap="round"/>
+      <rect x="14" y="24" width="8" height="3" rx="1.5" fill="#7ec850"/>
+      <line x1="18" y1="24" x2="18" y2="28" stroke="#7ec850" stroke-width="2"/>
+    </svg>
+    <span>Mill City Mowing</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#why">About</a></li>
+    <li><a href="#testimonials">Reviews</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Get a Free Quote</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div>
+    <div class="hero-badge">⚡ Serving the Minneapolis Area</div>
+    <h1>Your Lawn,<br><span>Our Passion.</span></h1>
+    <p>Professional lawn mowing, landscaping, and year-round property care — reliable, affordable, and always on time.</p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-primary">Get a Free Quote</a>
+      <a href="#services" class="btn-secondary">Our Services</a>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <div class="trust-item">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+    <span>Licensed & Insured</span>
+  </div>
+  <div class="trust-item">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+    <span>Free Estimates</span>
+  </div>
+  <div class="trust-item">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+    <span>Satisfaction Guaranteed</span>
+  </div>
+  <div class="trust-item">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+    <span>Local & Family-Owned</span>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="center">
+    <div class="section-label">What We Do</div>
+    <h2 class="section-title">Complete Lawn &amp; Property Care</h2>
+    <p class="section-sub">From first mow of spring to last snowflake of winter, we keep your property looking its best all year long.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">🌿</div>
+      <h3>Lawn Mowing</h3>
+      <p>Regular mowing, edging, and trimming to keep your grass healthy and your yard looking sharp every week of the season.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🌳</div>
+      <h3>Landscaping</h3>
+      <p>Design and maintenance services including planting, mulching, bed cleanup, and shaping to enhance your curb appeal.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">❄️</div>
+      <h3>Snow Removal</h3>
+      <p>Driveways, walkways, and parking areas cleared promptly and safely so you can move freely all winter long.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🌱</div>
+      <h3>Fertilization &amp; Weed Control</h3>
+      <p>Customized treatment plans that feed your lawn and fight back weeds for thick, lush, green grass all season.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section id="why">
+  <div class="center">
+    <div class="section-label">Why Choose Us</div>
+    <h2 class="section-title" style="color:#fff;">Built on Trust,<br>Driven by Quality</h2>
+    <p class="section-sub">We're your neighbors — and we treat every lawn like it's our own.</p>
+  </div>
+  <div class="why-grid">
+    <div class="why-card">
+      <div class="why-num">500+</div>
+      <h4>Happy Customers</h4>
+      <p>Hundreds of homeowners and businesses trust us with their properties.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-num">10+</div>
+      <h4>Years of Experience</h4>
+      <p>Over a decade of professional lawn care in the Minneapolis area.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-num">4.9★</div>
+      <h4>Average Rating</h4>
+      <p>Consistently top-rated by our customers on Google and Nextdoor.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-num">100%</div>
+      <h4>Satisfaction Guarantee</h4>
+      <p>Not happy with the work? We'll make it right — no questions asked.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="center">
+    <div class="section-label">Customer Reviews</div>
+    <h2 class="section-title">What Our Customers Say</h2>
+    <p class="section-sub">Don't just take our word for it — hear from the neighbors we serve.</p>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <blockquote>"Mill City Mowing has been taking care of our yard for two summers now. Always on time, always does an amazing job. Our lawn has never looked better!"</blockquote>
+      <div class="testi-author">Sarah M.</div>
+      <div class="testi-loc">Northeast Minneapolis</div>
+    </div>
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <blockquote>"Super reliable and reasonably priced. They did our spring cleanup and the yard looked completely transformed. Highly recommend for anyone in the area."</blockquote>
+      <div class="testi-author">Tom &amp; Linda K.</div>
+      <div class="testi-loc">St. Anthony Park</div>
+    </div>
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <blockquote>"We use them for both lawn care and snow removal. Makes life so much easier having one dependable crew year-round. Great communication too."</blockquote>
+      <div class="testi-author">James R.</div>
+      <div class="testi-loc">Dinkytown</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="center" style="margin-bottom:0">
+    <div class="section-label">Get In Touch</div>
+    <h2 class="section-title">Request a Free Quote</h2>
+    <p class="section-sub">Fill out the form and we'll get back to you within 24 hours with a no-obligation estimate.</p>
+  </div>
+  <div class="contact-wrapper">
+    <div class="contact-info">
+      <h3>Contact Information</h3>
+      <div class="contact-detail">
+        <div class="contact-icon">📞</div>
+        <div>
+          <strong>Phone</strong>
+          <a href="tel:+16125550100">(612) 555-0100</a>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-icon">✉️</div>
+        <div>
+          <strong>Email</strong>
+          <a href="mailto:hello@millcitymowing.com">hello@millcitymowing.com</a>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-icon">📍</div>
+        <div>
+          <strong>Service Area</strong>
+          <span>Minneapolis & Surrounding Areas</span>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-icon">🕐</div>
+        <div>
+          <strong>Hours</strong>
+          <span>Mon–Sat: 7am–7pm</span>
+        </div>
+      </div>
+    </div>
+    <form onsubmit="handleSubmit(event)">
+      <div class="form-row">
+        <div>
+          <label for="fname">First Name</label>
+          <input type="text" id="fname" placeholder="Jane" required>
+        </div>
+        <div>
+          <label for="lname">Last Name</label>
+          <input type="text" id="lname" placeholder="Smith" required>
+        </div>
+      </div>
+      <div>
+        <label for="email">Email Address</label>
+        <input type="email" id="email" placeholder="jane@email.com" required>
+      </div>
+      <div>
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" placeholder="(612) 000-0000">
+      </div>
+      <div>
+        <label for="service">Service Needed</label>
+        <select id="service">
+          <option value="">Select a service...</option>
+          <option>Lawn Mowing</option>
+          <option>Landscaping</option>
+          <option>Snow Removal</option>
+          <option>Fertilization & Weed Control</option>
+          <option>Multiple Services</option>
+        </select>
+      </div>
+      <div>
+        <label for="message">Tell Us About Your Yard</label>
+        <textarea id="message" placeholder="Approximate lot size, any specific needs or questions..."></textarea>
+      </div>
+      <button type="submit" class="btn-submit">Send My Request →</button>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#" class="footer-logo">
+    <span>🌿 Mill City Mowing</span>
+  </a>
+  <p>© 2025 Mill City Mowing. All rights reserved.</p>
+  <div class="footer-links">
+    <a href="#services">Services</a>
+    <a href="#why">About</a>
+    <a href="#contact">Contact</a>
+  </div>
+</footer>
+
+<script>
+function handleSubmit(e) {
+  e.preventDefault();
+  const btn = e.target.querySelector('.btn-submit');
+  btn.textContent = '✓ Request Sent! We\'ll be in touch soon.';
+  btn.style.background = '#2d6a2d';
+  btn.disabled = true;
+}
+</script>
+</body>
+</html>
